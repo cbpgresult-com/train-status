@@ -13,6 +13,7 @@ export default async function handler(req, res) {
     const response = await fetch(
       `https://train-running-api.p.rapidapi.com/api/LiveTrainApi?trainnumber=${train}&start_day=0`,
       {
+        method: "GET",
         headers: {
           "x-rapidapi-key": process.env.RAPIDAPI_KEY,
           "x-rapidapi-host": "train-running-api.p.rapidapi.com"
@@ -20,13 +21,17 @@ export default async function handler(req, res) {
       }
     );
 
-    const data = await response.json();
+    const text = await response.text();
 
-    res.status(200).json(data);
+    return res.status(response.status).json({
+      rapidapiStatus: response.status,
+      apiKeyExists: !!process.env.RAPIDAPI_KEY,
+      body: text
+    });
 
   } catch (err) {
 
-    res.status(500).json({
+    return res.status(500).json({
       error: err.message
     });
 
