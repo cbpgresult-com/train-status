@@ -1,147 +1,542 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<title>PNR Status Checker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #141e30, #243b55);
-  color: white;
-}
+<title>Statement of Marks</title>
 
-.container {
-  max-width: 420px;
-  margin: 60px auto;
-  padding: 20px;
-  background: #1e2a38;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
-}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-h2 {
-  margin-bottom: 15px;
-}
+<link rel="stylesheet" href="style.css">
 
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 10px;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #00c6ff;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #0072ff;
-}
-
-.loader {
-  display: none;
-  margin-top: 10px;
-}
-
-.result {
-  margin-top: 20px;
-  text-align: left;
-}
-
-.card {
-  background: #0f1a24;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-}
-
-.green { color: #00ff99; }
-.red { color: #ff4d4d; }
-</style>
 </head>
 
 <body>
 
-<div class="container">
-  <h2>🚆 PNR Status Checker</h2>
+<div class="marksheet">
 
-  <input type="text" id="pnr" placeholder="Enter 10-digit PNR">
+<!--====================-->
+<!-- HEADER             -->
+<!--====================-->
 
-  <button onclick="checkPNR()">Check Status</button>
+<div class="header">
 
-  <div id="loader" class="loader">🔄 Checking PNR...</div>
+<div class="logo">
 
-  <div id="result" class="result"></div>
+<img src="logo.png">
+
 </div>
 
-<script>
-function checkPNR() {
-  let pnr = document.getElementById("pnr").value.trim();
-  let result = document.getElementById("result");
-  let loader = document.getElementById("loader");
+<div class="header-text">
 
-  if (!pnr || pnr.length < 10) {
-    alert("Enter valid PNR");
-    return;
-  }
+<h1>
+MAHARAJA SUHEL DEV STATE UNIVERSITY
+</h1>
 
-  loader.style.display = "block";
-  result.innerHTML = "";
+<h2>
+AZAMGARH, UTTAR PRADESH
+</h2>
 
-  fetch("https://pnr-api-0hf4.onrender.com/pnr-status?pnr=" + pnr + "&t=" + Date.now())
-    .then(res => res.json())
-    .then(data => {
+</div>
 
-      console.log("DATA:", data);
+<div class="qr">
 
-      loader.style.display = "none";
+<img id="qrImage" src="qr.png">
 
-      // 🔥 IMPORTANT FIX
-      let d = data.data || data;
+</div>
 
-      if (!d || !d.trainName) {
-        result.innerHTML = "❌ No data found";
-        return;
-      }
+</div>
 
-      let html = `
-        <div class="card">🚆 Train: ${d.trainName}</div>
-        <div class="card">🔢 Number: ${d.trainNum}</div>
-        <div class="card">📍 From: ${d.stationFrom}</div>
-        <div class="card">📍 To: ${d.stationTo}</div>
-      `;
+<hr>
 
-      // 🔥 CORRECT passenger fields
-      if (d.passengerList && Array.isArray(d.passengerList)) {
-        d.passengerList.forEach(p => {
-          html += `
-            <div class="card">
-              Passenger ${p.passengerSerialNumber}: ${p.currentStatus}
-            </div>
-          `;
-        });
-      }
+<div class="serial-row">
 
-      result.innerHTML = html;
-    })
-    .catch(err => {
-      loader.style.display = "none";
-      result.innerHTML = "❌ Error loading data";
-    });
-}
-</script>
+<div>
 
+Serial No. :
+<span id="serialNo">
+
+23/2026/00012345
+
+</span>
+
+</div>
+
+<div class="act">
+
+(A State University Established Under U.P. Act No.35 of 2019)
+
+</div>
+
+</div>
+
+<div class="statement">
+
+STATEMENT OF MARKS
+
+</div>
+
+<div class="course-title"
+id="courseTitle">
+
+BACHELOR OF SCIENCE (B.Sc.)
+
+</div>
+
+<div class="semester-title"
+id="semesterTitle">
+
+VI SEMESTER EXAMINATION-2026
+
+</div>
+
+<div class="college-title">
+
+College Code & Name :
+
+<span id="collegeName">
+
+219 - MA SHARDA P.G. COLLEGE
+
+</span>
+
+</div>
+
+<!--====================-->
+<!-- STUDENT DETAILS    -->
+<!--====================-->
+
+<div class="student-box">
+
+<table>
+
+<tr>
+
+<td class="label">
+Name of Student
+</td>
+
+<td id="studentName">
+ASHISH
+</td>
+
+<td class="label">
+Roll No.
+</td>
+
+<td id="rollNo">
+24212040032
+</td>
+
+</tr>
+
+<tr>
+
+<td class="label">
+Father's Name
+</td>
+
+<td id="fatherName">
+RAM PRAJAPATI
+</td>
+
+<td class="label">
+Enrolment No.
+</td>
+
+<td id="enrolNo">
+MSDU/2023/210512
+</td>
+
+</tr>
+
+<tr>
+
+<td class="label">
+Mother's Name
+</td>
+
+<td id="motherName">
+SUNITA DEVI
+</td>
+
+<td class="label">
+Exam Type
+</td>
+
+<td id="examType">
+REGULAR
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<!-- Watermark -->
+
+<div class="watermark">
+
+<img src="watermark.png">
+
+</div>
+
+<!-- ===================================== -->
+<!-- PART 2 : SUBJECT MARKS TABLE -->
+<!-- ===================================== -->
+
+<div class="marks-section">
+
+<table class="marks-table">
+
+<thead>
+
+<tr>
+
+<th rowspan="2" style="width:85px">
+Paper<br>Code
+</th>
+
+<th rowspan="2" style="width:360px">
+SUBJECTS &amp; PAPER
+</th>
+
+<th colspan="2">
+THEORY
+</th>
+
+<th colspan="2">
+SESSIONAL
+</th>
+
+<th colspan="2">
+PRACTICAL
+</th>
+
+<th colspan="2">
+TOTAL
+</th>
+
+<th rowspan="2">
+GRADE
+</th>
+
+<th rowspan="2">
+CREDIT<br>POINTS
+</th>
+
+<th rowspan="2">
+CGPA
+</th>
+
+</tr>
+
+<tr>
+
+<th>OBT</th>
+<th>MAX</th>
+
+<th>OBT</th>
+<th>MAX</th>
+
+<th>OBT</th>
+<th>MAX</th>
+
+<th>OBT</th>
+<th>MAX</th>
+
+</tr>
+
+</thead>
+
+<tbody id="marksBody">
+
+<!-- Dynamic Rows -->
+
+<tr>
+
+<td>221005</td>
+
+<td>
+
+<b>BOTANY (MAJOR 1)</b>
+
+<br>
+
+<span class="paper-name">
+
+Archegoniates &amp; Plant Architecture
+
+</span>
+
+</td>
+
+<td>48</td>
+<td>75</td>
+
+<td>24</td>
+<td>25</td>
+
+<td>-</td>
+<td>-</td>
+
+<td><b>69</b></td>
+<td>100</td>
+
+<td>B+</td>
+
+<td>28.00</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td>221006</td>
+
+<td>
+
+Land Plants Architecture
+
+</td>
+
+<td>-</td>
+<td>-</td>
+
+<td>24</td>
+<td>25</td>
+
+<td>63</td>
+<td>75</td>
+
+<td><b>87</b></td>
+<td>100</td>
+
+<td>A+</td>
+
+<td>18.00</td>
+
+<td></td>
+
+</tr>
+
+</tbody>
+
+<tfoot>
+
+<tr>
+
+<td colspan="11"
+class="total-text">
+
+TOTAL CURRENT SEMESTER
+
+</td>
+
+<td id="totalCredit">
+
+204.00
+
+</td>
+
+<td id="semesterCGPA">
+
+7.49
+
+</td>
+
+</tr>
+
+<tr>
+
+<td colspan="11"
+class="total-text">
+
+CUMULATIVE SEMESTER
+
+</td>
+
+<td id="cgCredit">
+
+204.00
+
+</td>
+
+<td id="cgpa">
+
+7.49
+
+</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+<!-- ===================================== -->
+<!-- PART 3 : RESULT SUMMARY -->
+<!-- ===================================== -->
+
+<div class="result-summary">
+
+<div class="left-summary">
+
+<table class="summary-table">
+
+<tr>
+<td>Total Marks</td>
+<td id="totalMarks">486 / 600</td>
+</tr>
+
+<tr>
+<td>Total Credits</td>
+<td id="creditPoints">204.00</td>
+</tr>
+
+<tr>
+<td>SGPA</td>
+<td id="sgpa">8.20</td>
+</tr>
+
+<tr>
+<td>CGPA</td>
+<td id="cgpaValue">7.49</td>
+</tr>
+
+<tr>
+
+<td>Result</td>
+
+<td>
+
+<span id="resultStatus" class="pass-box">
+
+PASS
+
+</span>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="right-summary">
+
+<table class="grade-table">
+
+<tr>
+
+<th colspan="2">
+
+GRADE POINTS
+
+</th>
+
+</tr>
+
+<tr><td>O</td><td>10</td></tr>
+
+<tr><td>A+</td><td>9</td></tr>
+
+<tr><td>A</td><td>8</td></tr>
+
+<tr><td>B+</td><td>7</td></tr>
+
+<tr><td>B</td><td>6</td></tr>
+
+<tr><td>C</td><td>5</td></tr>
+
+<tr><td>P</td><td>4</td></tr>
+
+<tr><td>F</td><td>0</td></tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ============================ -->
+<!-- Formula -->
+<!-- ============================ -->
+
+<div class="formula-box">
+
+<b>SGPA</b>
+
+=
+
+Credit Points in Current Semester
+
+÷
+
+Credit Hours
+
+<br><br>
+
+<b>Percentage</b>
+
+=
+
+CGPA × 9.5
+
+</div>
+
+<!-- ============================ -->
+<!-- Footer -->
+<!-- ============================ -->
+
+<div class="footer">
+
+<div class="barcode">
+
+<img src="barcode.png">
+
+<div class="barcode-no">
+
+24212040032
+
+</div>
+
+</div>
+
+<div class="result-date">
+
+Result Declared :
+
+<span id="resultDate">
+
+25 June 2026
+
+</span>
+
+</div>
+
+<div class="signature">
+
+<img src="sign.png">
+
+<div>
+
+Controller of Examination
+
+</div>
+
+</div>
+
+</div>
 </body>
 </html>
