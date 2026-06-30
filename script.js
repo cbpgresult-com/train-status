@@ -238,6 +238,18 @@ function createTimeline(res){
 
     routeTimeline.innerHTML="";
 
+    addStation(
+
+        res.source_stn_name ||
+
+        res.source ||
+
+        "SOURCE",
+
+        "🚩"
+
+    );
+
 
 
     if(res.previous_stations){
@@ -296,9 +308,21 @@ function createTimeline(res){
 
     }
 
+
+
+    addStation(
+
+        res.dest_stn_name ||
+
+        res.destination ||
+
+        "DESTINATION",
+
+        "🏁"
+
+    );
+
 }
-
-
 
 // ===============================
 // Add Station
@@ -312,17 +336,31 @@ function addStation(name,icon){
 
     div.innerHTML=`
 
-        <span style="font-size:20px;">
-            ${icon}
-        </span>
+        <div class="station-icon">
 
-        <span>
+            ${icon}
+
+        </div>
+
+        <div class="station-name">
+
             ${name}
-        </span>
+
+        </div>
 
     `;
 
     routeTimeline.appendChild(div);
+
+    if(icon!=="🏁"){
+
+        const line=document.createElement("div");
+
+        line.className="station-line";
+
+        routeTimeline.appendChild(line);
+
+    }
 
 }
 
