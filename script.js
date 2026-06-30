@@ -290,7 +290,8 @@ function addStation(name,icon){
 async function fetchTrain(trainNo){
 
     const response = await fetch(
-        `/api/running?train=${encodeURIComponent(trainNo)}`
+        "https://train-status-mu.vercel.app/api/running?train=" +
+        encodeURIComponent(trainNo)
     );
 
     if(!response.ok){
@@ -300,11 +301,8 @@ async function fetchTrain(trainNo){
     const json = await response.json();
 
     if(json.status !== "success"){
-        throw new Error("Train Not Found");
+        throw new Error(json.message || "Train Not Found");
     }
 
     return json.data;
-}
-    return json.data;
-
 }
