@@ -28,6 +28,17 @@ const statusBadge = document.getElementById("statusBadge");
 
 const routeTimeline = document.getElementById("routeTimeline");
 
+const journeyDate =
+document.getElementById("journeyDate");
+
+const lastUpdated =
+document.getElementById("lastUpdated");
+
+const liveStatus =
+document.getElementById("liveStatus");
+
+const refreshBtn =
+document.getElementById("refreshBtn");
 
 // ===============================
 // Button Event
@@ -157,7 +168,16 @@ function fillResult(res){
 
     }
 
+journeyDate.textContent =
+res.train_start_date ||
+res.start_date ||
+"--";
 
+lastUpdated.textContent =
+new Date().toLocaleTimeString();
+
+liveStatus.textContent =
+"🟢 LIVE";
     // Next Station
 
     if(res.upcoming_stations &&
@@ -306,3 +326,8 @@ async function fetchTrain(trainNo){
 
     return json.data;
 }
+refreshBtn.addEventListener("click", () => {
+
+    searchTrain();
+
+});
