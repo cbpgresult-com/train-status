@@ -284,12 +284,46 @@ function addStation(name,icon){
 
 
 // ===============================
-// Placeholder
-// API in Part 2B
+// API
 // ===============================
 
 async function fetchTrain(trainNo){
 
-    throw "API not connected.";
+    const url =
+        `${CONFIG.API_URL}?trainnumber=${encodeURIComponent(trainNo)}&start_day=0`;
+
+    const response = await fetch(url,{
+
+        method:"GET",
+
+        headers:{
+
+            "Content-Type":"application/json",
+
+            "x-rapidapi-key":CONFIG.API_KEY,
+
+            "x-rapidapi-host":CONFIG.API_HOST
+
+        }
+
+    });
+
+    if(!response.ok){
+
+        throw new Error("HTTP Error : " + response.status);
+
+    }
+
+    const json = await response.json();
+
+    console.log(json);
+
+    if(json.status !== "success"){
+
+        throw new Error("Train Not Found");
+
+    }
+
+    return json.data;
 
 }
