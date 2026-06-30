@@ -21,13 +21,9 @@ export default async function handler(req, res) {
       }
     );
 
-    const text = await response.text();
+    const data = await response.json();
 
-    return res.status(response.status).json({
-      rapidapiStatus: response.status,
-      apiKeyExists: !!process.env.RAPIDAPI_KEY,
-      body: text
-    });
+    return res.status(200).json(data);
 
   } catch (err) {
 
